@@ -43,6 +43,8 @@ local keymaps = {
 	{ "n", "J", "mzJ`z", "Join line below to current and center cursor" },
 	{ "n", "G", "Gzz", "Go to end of file and center cursor" },
 	{ "n", "gg", "ggzz", "Go to beginning of file and center cursor" },
+	{ "n", "<leader>/", "gcc", "Comment current line" },
+	{ "v", "<leader>/", "gc", "Comment current block" },
 }
 
 for _, maps in pairs(keymaps) do

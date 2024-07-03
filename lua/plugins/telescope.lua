@@ -22,6 +22,7 @@ return {
 			defaults = {
 				path_display = { "smart" },
 				layout_strategy = "horizontal",
+				sorting_strategy = "ascending",
 				layout_config = {
 					horizontal = {
 						prompt_position = "top",
