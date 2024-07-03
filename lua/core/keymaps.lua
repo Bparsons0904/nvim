@@ -1,32 +1,50 @@
 vim.g.mapleader = " "
 
-local keymap = vim.keymap
+function _G.addToKeyMap(mode, key, cmd, desc)
+	vim.keymap.set(mode, key, cmd, { noremap = true, silent = true, desc = desc })
+end
 
-keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, silent = true, desc = "Save file" })
-keymap.set("n", "<leader>q", ":wqa<CR>", { noremap = true, silent = true, desc = "Save all, quit all and exit" })
--- keymap.set('n', '<leader>wq', ':wq<CR>', { noremap = true, silent = true, desc = "Save and quit" })
-keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
-keymap.set("i", "kj", "<ESC>", { desc = "Exit insert mode with kj" })
+local keymaps = {
+	{ "n", "<leader>w", ":w<CR>", "Save file" },
+	{ "n", "<leader>q", ":wqa<CR>", "Save all, quit all and exit" },
+	{ "n", "<C-a>", "ggVGy", "Yank entire file" },
+	{ "i", "jk", "<ESC>", "Exit insert mode with jk" },
+	{ "i", "kj", "<ESC>", "Exit insert mode with kj" },
+	{ "n", "<leader>h", ":nohl<CR>", "Clear search highlights" },
+	{ "n", "<leader>c", ":bd<CR>", "Close the current buffer" },
+	{ "n", "<leader>bb", ":bprevious<CR>", "Go to previous buffer" },
+	{ "n", "<leader>bn", ":bnext<CR>", "Go to next buffer" },
+	{ "n", "<leader>ba", ":%bd|e#|bd#<CR>", "Close all buffers except current" },
+	{ "n", "<leader>bl", ":ls<CR>", "List all buffers" },
+	{ "n", "<leader>bc", ":bufdo bdelete<CR>", "Close all buffers" },
+	{ "n", "<leader>+", "<C-a>", "Increment number" },
+	{ "n", "<leader>-", "<C-x>", "Decrement number" },
+	{ "v", "<", "<gv", "Better indenting (decrease)" },
+	{ "v", ">", ">gv", "Better indenting (increase)" },
+	{ "n", "<C-h>", "<C-w>h", "Move to left split" },
+	{ "n", "<C-j>", "<C-w>j", "Move to below split" },
+	{ "n", "<C-k>", "<C-w>k", "Move to above split" },
+	{ "n", "<C-l>", "<C-w>l", "Move to right split" },
+	{ "n", "<leader>sv", "<C-w>v", "Split window vertically" },
+	{ "n", "<leader>sh", "<C-w>s", "Split window horizontally" },
+	{ "n", "<leader>se", "<C-w>=", "Make splits equal size" },
+	{ "n", "<leader>sx", "<cmd>close<CR>", "Close current split" },
+	{ "n", "<leader>to", "<cmd>tabnew<CR>", "Open new tab" },
+	{ "n", "<leader>tx", "<cmd>tabclose<CR>", "Close current tab" },
+	{ "n", "<leader>tn", "<cmd>tabn<CR>", "Go to next tab" },
+	{ "n", "<leader>tp", "<cmd>tabp<CR>", "Go to previous tab" },
+	{ "n", "<leader>tf", "<cmd>tabnew %<CR>", "Open current buffer in new tab" },
+	{ "n", "<C-u>", "<C-u>zz", "Scroll up and center cursor" },
+	{ "n", "<C-d>", "<C-d>zz", "Scroll down and center cursor" },
+	{ "n", "<C-b>", "<C-b>zz", "Page up and center cursor" },
+	{ "n", "<C-f>", "<C-f>zz", "Page down and center cursor" },
+	{ "n", "n", "nzzzv", "Next search result and center cursor" },
+	{ "n", "N", "Nzzzv", "Previous search result and center cursor" },
+	{ "n", "J", "mzJ`z", "Join line below to current and center cursor" },
+	{ "n", "G", "Gzz", "Go to end of file and center cursor" },
+	{ "n", "gg", "ggzz", "Go to beginning of file and center cursor" },
+}
 
-keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
-
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
--- Better indenting
-keymap.set("v", "<", "<gv")
-keymap.set("v", ">", ">gv")
--- window management
-keymap.set("n", "<C-h>", "<C-w>h")
-keymap.set("n", "<C-j>", "<C-w>j")
-keymap.set("n", "<C-k>", "<C-w>k")
-keymap.set("n", "<C-l>", "<C-w>l")
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
-
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
-keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
-keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
-keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+for _, maps in pairs(keymaps) do
+	addToKeyMap(unpack(maps))
+end
